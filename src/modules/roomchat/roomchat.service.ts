@@ -8,21 +8,21 @@ import { RoomChatDTO } from "./dto/roomcha.dto";
 export class RoomChatService{
     constructor(@InjectModel(RoomChat.name) private roomChatModel: Model<RoomChatDocument>){}
     
-    getListRoomChatDB(){
-        const listRoomChat = this.roomChatModel.find().exec();
+    async getListRoomChatDB(){
+        const listRoomChat = await this.roomChatModel.find().exec();
         return listRoomChat;
     }
 
-    createRoomChatDB(RoomChatDTO:RoomChatDTO){
+    async createRoomChatDB(RoomChatDTO:RoomChatDTO){
         const roomchat = new this.roomChatModel({
-            name:RoomChatDTO.name,
-            userId:RoomChatDTO.userId
+            name: RoomChatDTO.name,
+            userId: RoomChatDTO.userId
         });
         return roomchat.save();
     }
 
-    getRoomChatDB(Id:string){
-        const roomChat = this.roomChatModel.findById(Id);
+    async getRoomChatDB(Id:string){
+        const roomChat = await this.roomChatModel.findById(Id);
         return roomChat;
     }
 
