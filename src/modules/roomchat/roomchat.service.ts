@@ -26,4 +26,16 @@ export class RoomChatService{
         return roomChat;
     }
 
+    async updateNameRoomChatDB(Id:string, RoomChatDTO:RoomChatDTO){
+        const roomChat = await this.roomChatModel.updateOne({
+            _id:Id
+        },
+        {
+            name:RoomChatDTO.name
+        }).exec();
+
+        return roomChat;
+
+    }
+
 }

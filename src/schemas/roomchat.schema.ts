@@ -11,6 +11,10 @@ export class RoomChat {
 
   @Prop({type: Types.ObjectId, ref:"User"})
   userId: string
+
+  @Prop()
+  Messages: [{type: Types.ObjectId, ref: 'Messages' }]
+
 }
 
 export const RoomChatSchema = SchemaFactory.createForClass(RoomChat);

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, Put } from "@nestjs/common";
 import { RoomChatService } from "./roomchat.service";
 import { RoomChatDTO } from "./dto/roomcha.dto";
 
@@ -22,6 +22,11 @@ export class RoomChatController{
     @Get(":Id")
     HandleGetRoomChat(@Param("Id") Id:string){
         return this.RoomChatService.getRoomChatDB(Id);
+    }
+
+    @Put(":Id")
+    HandleUpdateNameRoomChat(@Param("Id") Id:string, @Body() RoomChatDTO:RoomChatDTO){
+        return this.RoomChatService.updateNameRoomChatDB(Id, RoomChatDTO)
     }
     
 }
