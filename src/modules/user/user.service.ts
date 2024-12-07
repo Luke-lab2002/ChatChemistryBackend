@@ -27,7 +27,8 @@ export class UserService{
                 name:UserDto.name,
                 email:UserDto.email,
                 password:hash,
-                isActive:UserDto.isActive
+                isActive:UserDto.isActive,
+                role:UserDto.role
             });
             return user.save();
         }

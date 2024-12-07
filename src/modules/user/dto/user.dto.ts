@@ -3,4 +3,5 @@ export class UserDto{
     name?:string
     password?:string
     isActive?:boolean
+    role?:string
 }

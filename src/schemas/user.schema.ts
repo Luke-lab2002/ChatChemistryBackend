@@ -20,6 +20,9 @@ export class User {
 
   @Prop()
   RoomChat: [{type: Types.ObjectId, ref: 'RoomChat' }]
+
+  @Prop()
+  role:string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
