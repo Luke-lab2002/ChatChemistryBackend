@@ -9,7 +9,7 @@ export class Messages{
     roomchatId: string; 
 
     @Prop()
-    context: string;
+    content: string;
 
     @Prop()
     role:string;

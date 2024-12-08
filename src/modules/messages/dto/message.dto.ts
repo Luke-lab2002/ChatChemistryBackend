@@ -1,5 +1,5 @@
 export class messagesDTO{
     roomchatId?:string
-    context?:string
+    content?:string
     role?:string
 }
