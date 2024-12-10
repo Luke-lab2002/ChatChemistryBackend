@@ -6,11 +6,15 @@ import { messagesDTO } from "./dto/message.dto";
 import { HttpService } from "@nestjs/axios";
 import { lastValueFrom } from "rxjs";
 import { ConfigService } from "@nestjs/config";
+import { RoomChat } from "src/schemas/roomchat.schema";
 
 
 @Injectable()
 export class MessagesService{
-    constructor(@InjectModel(Messages.name) private messageModel:Model<MessagesDocument>,
+    constructor(
+    @InjectModel(Messages.name) private messageModel:Model<MessagesDocument>,
+    @InjectModel(RoomChat.name) private roomChatModel:Model<RoomChat>,
+
     private readonly httpService:HttpService,
     private configService: ConfigService
  ){}
@@ -28,28 +32,66 @@ export class MessagesService{
         return listMessage;
     }
 
-    createMessageDB(messagesDTO:messagesDTO){
+    async createMessageDB(messagesDTO:messagesDTO){
 
         const message = new this.messageModel({
             roomchatId: messagesDTO.roomchatId,
             content: messagesDTO.content,
             role: messagesDTO.role
         });
+
+        await this.roomChatModel.updateOne(
+            {
+                _id:messagesDTO.roomchatId
+            },
+            {
+                 $push:{Messages:message._id}
+            }
+        )
+        
         return message.save();
     }
 
-    createMessageDBNoDTO(roomchatId:string, content:string, role:string){
+    async createMessageDBNoDTO(roomchatId:string, content:string, role:string){
 
         const message = new this.messageModel({
             roomchatId: roomchatId,
             content: content,
             role: role
         });
+
+        await this.roomChatModel.updateOne(
+            {
+                _id:roomchatId
+            },
+            {
+                 $push:{Messages:message._id}
+            }
+        )
+        
         return message.save();
     }
 
+    async deleteMessageDB(id:string){
+        const message = await this.messageModel.findOneAndDelete({
+            _id:id
+        });
+
+        await this.roomChatModel.updateOne(
+            {
+                _id:message.roomchatId
+            },
+            {
+                 $pull:{Messages:message._id}
+            }
+        )
+        
+        return message;
+
+    }
+
     async sendMessage(messagesDTO:messagesDTO){
-        await this.createMessageDB(messagesDTO)
+        const create_message = await this.createMessageDB(messagesDTO)
         const messages = await this.getListMessagesDB(messagesDTO.roomchatId)
 
         const conversation = messages.map(item => {

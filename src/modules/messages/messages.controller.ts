@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { MessagesService } from "./messages.service";
 import { messagesDTO } from "./dto/message.dto";
 
@@ -26,11 +26,26 @@ export class MessagesController{
     }
 
     @Post("/send")
-    HandleSendMessage(@Body() messagesDTO:messagesDTO){
-        const message = this.MessagesService.sendMessage(messagesDTO);
-        return message;    
+    async HandleSendMessage(@Body() messagesDTO:messagesDTO){
+        try {
+            const message = await this.MessagesService.sendMessage(messagesDTO);
+            return {"message":message};  
+        } catch (error) {
+            return {"error":error};
+        }
+  
     }
 
-    
+    @Delete("/:Id")
+    async HandleDeleteMessage(@Param("Id") Id:string){
+        console.log(Id)
+        try {
+            await this.MessagesService.deleteMessageDB(Id);
+            return {"messages":"Delete succes"}
+
+        } catch (error) {
+            return {"error":error}
+        }
+    }
 
 }

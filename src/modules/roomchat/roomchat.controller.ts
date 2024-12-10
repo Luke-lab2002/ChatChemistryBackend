@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put } from "@nestjs/common";
+import { Controller, Get, Post, Body, Param, Put, Delete } from "@nestjs/common";
 import { RoomChatService } from "./roomchat.service";
 import { RoomChatDTO } from "./dto/roomcha.dto";
 
@@ -19,14 +19,20 @@ export class RoomChatController{
         return this.RoomChatService.createRoomChatDB(RoomChatDTO);
     }
 
-    @Get(":Id")
+    @Get("/:Id")
     HandleGetRoomChat(@Param("Id") Id:string){
         return this.RoomChatService.getRoomChatDB(Id);
     }
 
-    @Put(":Id")
+    @Put("/:Id")
     HandleUpdateNameRoomChat(@Param("Id") Id:string, @Body() RoomChatDTO:RoomChatDTO){
         return this.RoomChatService.updateNameRoomChatDB(Id, RoomChatDTO)
+    }
+
+    @Delete("/:Id")
+    HandleDeleteRoomChat(@Param("Id") Id:string){
+        return this.RoomChatService.deleteRoomChatDB(Id)
+        // return "Hello world"
     }
     
 }

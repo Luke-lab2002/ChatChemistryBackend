@@ -1,6 +1,7 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { Messages } from './messages.schema';
 
 export type RoomChatDocument = HydratedDocument<RoomChat>;
 
@@ -12,8 +13,8 @@ export class RoomChat {
   @Prop({type: Types.ObjectId, ref:"User"})
   userId: string
 
-  @Prop()
-  Messages: [{type: Types.ObjectId, ref: 'Messages' }]
+  @Prop({type: [{type: Types.ObjectId, ref:"Messages"}]})
+  Messages: Messages[]
 
 }
 

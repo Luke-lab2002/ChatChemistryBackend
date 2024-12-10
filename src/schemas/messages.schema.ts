@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument, Types } from "mongoose";
+import { RoomChat } from "./roomchat.schema";
 
 export type MessagesDocument = HydratedDocument<Messages>;
 
