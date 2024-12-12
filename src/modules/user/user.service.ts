@@ -30,6 +30,7 @@ export class UserService{
                 isActive:UserDto.isActive,
                 role:UserDto.role
             });
+
             return user.save();
         }
 

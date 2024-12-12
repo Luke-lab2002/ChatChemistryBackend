@@ -9,9 +9,9 @@ export class RoomChatController{
 
     }
 
-    @Get()
-    HandleGetListRoom(){
-        return this.RoomChatService.getListRoomChatDB();
+    @Get("userid/:Id")
+    HandleGetListRoom(@Param("Id") Id:string){
+        return this.RoomChatService.getListRoomChatDB(Id);
     }
 
     @Post("/create-roomchat")

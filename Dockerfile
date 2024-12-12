@@ -9,6 +9,7 @@ COPY package*.json ./
 
 # Cài đặt các dependencies
 RUN npm install
+RUN npm install bcrypt
 
 # Sao chép toàn bộ mã nguồn vào container
 COPY . .

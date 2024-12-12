@@ -12,8 +12,12 @@ export class RoomChatService{
         @InjectModel(Messages.name) private messagesModel: Model<MessagesDocument>
 ){}
     
-    async getListRoomChatDB(){
-        const listRoomChat = await this.roomChatModel.find().exec();
+    async getListRoomChatDB(userId:string){
+        const listRoomChat = await this.roomChatModel
+        .find({
+            userId:userId
+        })
+        .exec();
         return listRoomChat;
     }
 

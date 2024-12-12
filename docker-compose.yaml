@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+  nestjs-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs-chemistry-backend 
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/chemistry
+    networks:
+      - chemistry_shared_network
+
   mongodb:
     image: mongo:latest
     container_name: mongodb
@@ -11,11 +23,12 @@ services:
     environment:
       - MONGO_INITDB_DATABASE=chemistry
     networks:
-      - mongodb_network
+      - chemistry_shared_network
 
 volumes:
   mongodb_data:
 
 networks:
-  mongodb_network:
-    driver: bridge
+  chemistry_shared_network:
+    external: true
+    name: chemistry_shared_network
