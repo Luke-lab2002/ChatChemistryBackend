@@ -37,6 +37,13 @@ $ npm install
 ```bash
 $ docker-compose up
 ```
+## ENV
+Before you run this project, you should create file ```.env```
+```bash
+CHATBOT_URL= # url chatbot service
+SCRETKEY = # UUid
+DB_URL= # url database
+```
 
 ## Compile and run the project
 
